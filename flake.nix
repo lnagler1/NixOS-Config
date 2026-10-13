@@ -1,27 +1,25 @@
 {
+  description = "BigNixOS";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
   };
 
   outputs = {
     self,
     nixpkgs,
-    nixos-wsl,
-    ...
   }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          nixos-wsl.nixosModules.default
-          ./configuration.nix
-        ];
-      };
+    nixosConfigurations.nix = nixpkgs.lib.nixosSystem {
+      inherit system;
+
+      modules = [
+        ./configuration.nix
+      ];
     };
+
     formatter.${system} = pkgs.alejandra;
   };
 }
