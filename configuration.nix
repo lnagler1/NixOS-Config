@@ -60,6 +60,7 @@
       waybar
       swaybg
       gruvbox-gtk-theme
+      spotify
       vlc
       gruvbox-kvantum
       qview
