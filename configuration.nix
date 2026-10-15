@@ -65,6 +65,7 @@
       gruvbox-kvantum
       qview
       hyprshot
+      hyprshade
       hyprlock
       hyprlauncher
       hyprshutdown
