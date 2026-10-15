@@ -21,6 +21,7 @@
 
       "spotify"
       "osu-lazer-bin"
+      "aseprite"
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -59,6 +60,7 @@
 
       waybar
       swaybg
+      whatsapp-electron
       gruvbox-gtk-theme
       spotify
       vlc
@@ -93,6 +95,7 @@
       spotify
       libreoffice-fresh
       wireshark
+      aseprite
 
       osu-lazer-bin
 
