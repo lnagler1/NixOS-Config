@@ -22,6 +22,8 @@
       "spotify"
       "osu-lazer-bin"
       "aseprite"
+      "unityhub"
+      "corefonts"
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -46,6 +48,7 @@
 
       gcc
       clang
+      openssl
       gdb
       fastfetch
       btop
@@ -96,6 +99,18 @@
       libreoffice-fresh
       wireshark
       aseprite
+      ((unityhub.override {
+        extraLibs = pkgs: [
+          pkgs.ncurses
+          pkgs.stdenv.cc.cc.lib
+        ];
+      }).overrideAttrs (old: {
+        # libtinfo is an ncurses alias that the FHS ldconfig cache omits.
+        postFixup = (old.postFixup or "") + ''
+          wrapProgram $out/opt/unityhub/unityhub \
+            --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [pkgs.ncurses]}"
+        '';
+      }))
 
       osu-lazer-bin
 
@@ -113,6 +128,7 @@
     wget
     zip
     unzip
+    git-lfs
   ];
 
   ################
@@ -120,6 +136,8 @@
   ################
 
   virtualisation.docker.enable = true;
+
+  services.tailscale.enable = true;
 
   qt = {
     enable = true;
@@ -155,6 +173,7 @@
       };
       init.defaultBranch = "master";
       pull.ff = "only";
+      lfs.enable = true;
     };
   };
 
