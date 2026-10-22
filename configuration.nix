@@ -32,6 +32,7 @@
     extraGroups = [
       "wheel"  # Enable ‘sudo’ for the user.
       "docker"
+      "vboxusers"
       "wireshark" # Capture all interfaces without superuser priviledges
     ];
     shell = pkgs.zsh;
@@ -128,6 +129,7 @@
     wget
     zip
     unzip
+    sbctl
     git-lfs
   ];
 
@@ -136,6 +138,7 @@
   ################
 
   virtualisation.docker.enable = true;
+  virtualisation.virtualbox.host.enable = true;
 
   services.tailscale.enable = true;
 
@@ -286,12 +289,18 @@
   hardware.bluetooth.enable = true;
 
   # Use the systemd-boot EFI boot loader.
+  # Lanzaboote übernimmt die Installation des signierten Bootloaders.
   boot.loader = {
     systemd-boot = {
-      enable = true;
+      enable = lib.mkForce false;
       configurationLimit = 15;
     };
     efi.canTouchEfiVariables = true;
+  };
+
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
   };
 
   # Greeter
